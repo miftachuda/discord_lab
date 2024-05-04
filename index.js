@@ -15,8 +15,6 @@ class Discord {
           'Content-Type': 'application/json'
         }
       });
-
-      console.log('Data:', response.data);
     } catch (error) {
       console.error('Error:', error.response ? error.response.data : error.message);
     }
@@ -33,7 +31,7 @@ times.forEach(time => {
   schedule.scheduleJob({ hour: time, minute: 33 }, function () {
     discord.reply(`Executing task scheduled at ${time}:00`);
     labware(discord)
-    discord.reply("Task running at:", new Date().toLocaleString());
+    discord.reply(`"Task running at:"${new Date().toLocaleString()}`);
   });
 });
 
