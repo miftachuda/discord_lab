@@ -25,13 +25,14 @@ const discord = new Discord();
 
 
 
-const times = [1, 10, 17, 22]; // 24-hour format times
+const times = [1, 10, 17, 23]; // 24-hour format times
 
 times.forEach(time => {
-  schedule.scheduleJob({ hour: time, minute: 33 }, function () {
+  schedule.scheduleJob({ hour: time, minute: 6 }, function () {
     discord.reply(`Executing task scheduled at ${time}:00`);
     labware(discord)
     discord.reply(`"Task running at:"${new Date().toLocaleString()}`);
   });
 });
 
+labware(discord)

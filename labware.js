@@ -493,15 +493,15 @@ async function castSample(sam) {
         function (acc, curr) {
             let sample_name = curr[0].code
             let point_detail = curr.reduce(function (acc, curr1) {
-                str = `${curr1.param} : ${curr1.value} ${curr1.unit} \n`
+                str = `${curr1.param} : ${curr1.value} ${curr1.unit}\n`
                 acc = `${acc} ${str}`
                 return acc;
             }, "")
-            acc = `${acc}<b>${sample_name} :</b>\n${point_detail}`
+            acc = `${acc}\`\`\`🎯${sample_name}: \n${point_detail}\`\`\``
 
             return acc;
         }, "")
-    return `<b>Shift : ${shift}</b> \n${final_sample}`
+    return `✅ Shift : ${shift} ✅\n${final_sample}`
 }
 async function sendMessage(message) {
     console.log(message)
