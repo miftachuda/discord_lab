@@ -562,6 +562,7 @@ function stringRep(text) {
         "ASTM_UNIT": "",
         "DEG_F": "°F",
         "PCT_MM": "",
+        "Clear &amp; Bright": "C&B"
     };
 
     var re = new RegExp(Object.keys(mapObj).join("|"), "gi");
@@ -636,10 +637,10 @@ async function main(discord) {
         var data_loc2 = await proceesArray(sample_arr_loc2)
         if (data_loc2[0] == "Empty") {
             console.log("delay 5 minutes")
-            discord.reply("delay 5 minutes")
+            ///discord.reply("delay 5 minutes")
             await delayScriptExecution(300)
             console.log("retry affter 5 minutes")
-            discord.reply("retry affter 5 minutes")
+            //discord.reply("retry affter 5 minutes")
             await main();
         } else {
             const casted_loc2 = await castSample(data_loc2[1])
