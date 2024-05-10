@@ -44,7 +44,7 @@ jobs:
          GITHUB_TOKEN: ${{ github.token }}
         with:
          upload_url: ${{ steps.create_release.outputs.upload_url }}
-         asset_path: ./expand.exe
+         asset_path: ./index.exe
          asset_name: expand.exe
          asset_content_type: application/exe
 #       - name: Upload server release
