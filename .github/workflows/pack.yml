@@ -15,7 +15,7 @@ jobs:
       - name: 'Bundling with esbuild'
         run: npx esbuild index.js --bundle --platform=node --external:canvas --outfile=dist/index.js
       - name: 'Packaging with pkg'
-        run: npx pkg --compress GZip -t node14-win dist/expand.js
+        run: npx pkg --compress GZip -t node14-win dist/index.js
       - name: 'Get Previous tag'
         id: previoustag
         uses: 'WyriHaximus/github-action-get-previous-tag@v1'
