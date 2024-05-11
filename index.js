@@ -1,10 +1,13 @@
 const labware = require("./labware.js")
 const schedule = require('node-schedule');
-const { HttpsProxyAgent } = require('https-proxy-agent');
+const fetch = require("node-fetch")
+const { HttpsProxyAgent } = require('hpagent')
 
-const proxyUrl = `https://miftachul.huda:pertamina%402026@172.17.3.161:8080`
-const proxyAgent = new HttpsProxyAgent(proxyUrl);
 
+const proxyUrl = `http://miftachul.huda:pertamina%402026@172.17.3.161:8080`
+const proxyAgent = new HttpsProxyAgent({
+  proxy: proxyUrl
+})
 
 class Discord {
   async reply(text) {

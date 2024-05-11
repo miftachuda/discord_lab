@@ -1,8 +1,9 @@
-const axiost = require("axios");
+
 const { JSDOM } = require("jsdom");
 const { XMLParser } = require("fast-xml-parser");
-//var qs = require('qs');
 const moment = require("moment/moment");
+const fetch = require("node-fetch")
+var Headers = fetch.Headers;
 
 async function One() {
     var config = {
@@ -503,40 +504,40 @@ async function castSample(sam) {
         }, "")
     return `✅ Shift : ${shift} ✅\n${final_sample}`
 }
-async function sendMessage(message) {
-    console.log(message)
-    // const pro_agent = require('proxying-agent').globalize('http://miftachul.huda:pertamina%402025@172.17.3.162:8080');
-    async function callAxiosWithRetry(config, depth, failMassage) {
-        const wait = (ms) => new Promise((res) => setTimeout(res, ms));
-        try {
-            return await axiost(config)
-        } catch (e) {
-            if (depth > 10) {
-                throw e;
-            }
-            console.log(e)
-            await wait(2 ** depth * 100);
-            console.log("Retrying .. " + depth)
-            return callAxiosWithRetry(config, depth + 1, failMassage);
-        }
-    }
-    let encoded = encodeURIComponent(message);
-    var config = {
-        // httpAgent: pro_agent,
-        // httpsAgent: pro_agent,
-        method: 'post',
-        url: `https://api.telegram.org/bot5266529032:AAG6oq2TOmKOXrt5qaeVLk3ehvYF0bJZ6ko/sendMessage?chat_id=-805440157&parse_mode=HTML&text=${encoded}`,
-        headers: {}
-    };
+// async function sendMessage(message) {
+//     console.log(message)
+//     // const pro_agent = require('proxying-agent').globalize('http://miftachul.huda:pertamina%402025@172.17.3.162:8080');
+//     async function callAxiosWithRetry(config, depth, failMassage) {
+//         const wait = (ms) => new Promise((res) => setTimeout(res, ms));
+//         try {
+//             return await axiost(config)
+//         } catch (e) {
+//             if (depth > 10) {
+//                 throw e;
+//             }
+//             console.log(e)
+//             await wait(2 ** depth * 100);
+//             console.log("Retrying .. " + depth)
+//             return callAxiosWithRetry(config, depth + 1, failMassage);
+//         }
+//     }
+//     let encoded = encodeURIComponent(message);
+//     var config = {
+//         // httpAgent: pro_agent,
+//         // httpsAgent: pro_agent,
+//         method: 'post',
+//         url: `https://api.telegram.org/bot5266529032:AAG6oq2TOmKOXrt5qaeVLk3ehvYF0bJZ6ko/sendMessage?chat_id=-805440157&parse_mode=HTML&text=${encoded}`,
+//         headers: {}
+//     };
 
-    await callAxiosWithRetry(config, 0, "Fail Send Telegram")
-        .then(function (response) {
-            console.log("Telegram message Sent");
-        })
-        .catch(function (error) {
-            console.log("Failed sending Telegram message");
-        });
-}
+//     await callAxiosWithRetry(config, 0, "Fail Send Telegram")
+//         .then(function (response) {
+//             console.log("Telegram message Sent");
+//         })
+//         .catch(function (error) {
+//             console.log("Failed sending Telegram message");
+//         });
+// }
 function stringRep(text) {
 
     var mapObj = {
@@ -641,7 +642,7 @@ async function main(discord) {
             await delayScriptExecution(300)
             console.log("retry affter 5 minutes")
             //discord.reply("retry affter 5 minutes")
-            await main();
+            await main(discord);
         } else {
             const casted_loc2 = await castSample(data_loc2[1])
             const final_result_loc2 = stringRep(casted_loc2)
@@ -665,7 +666,7 @@ async function main(discord) {
         console.log("No data yet")
         await delayScriptExecution(900)
         console.log("Retrying after wait")
-        await main();
+        await main(discord);
         // await sendMessage("LOC II No data yet")
     }
     const endTime = performance.now();
