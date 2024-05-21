@@ -602,7 +602,7 @@ async function proceesArray(array_in) {
     if (samples[0].section === "LOC2") {
         min_sample = 5
     } else {
-        min_sample = 3
+        min_sample = 1
     }
     if (sorted[2].length > min_sample && shift == "Sore") {
         return ["Sore", sorted[2]]
@@ -646,7 +646,7 @@ async function main(discord) {
         } else {
             const casted_loc2 = await castSample(data_loc2[1])
             const final_result_loc2 = stringRep(casted_loc2)
-            discord.reply(final_result_loc2)
+            await discord.reply(final_result_loc2)
             console.log(final_result_loc2)
             // await sendMessage(final_result_loc2)
             if (dom_ext.window.document.getElementsByClassName('dataTableInner').length > 0) {
@@ -655,7 +655,7 @@ async function main(discord) {
                 if (data_ext[0] != "Empty") {
                     const casted_ext = await castSample(data_ext[1])
                     const final_result_ext = stringRep(casted_ext)
-                    discord.reply(final_result_ext)
+                    await discord.reply(final_result_ext)
                     console.log(final_result_ext)
                     // await sendMessage(reduced)
                 }
@@ -672,6 +672,7 @@ async function main(discord) {
     const endTime = performance.now();
     const executionTime = endTime - startTime;
     const formattedTime = (executionTime / 1000).toFixed(2) + " Seconds";
+    discord.reply(formattedTime)
     //await sendMessage(formattedTime)
 }
 module.exports = main
