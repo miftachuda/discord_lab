@@ -1,4 +1,4 @@
-name: build exe
+name: Compile and Release
 on:
   workflow_dispatch:
 jobs:
