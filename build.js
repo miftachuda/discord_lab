@@ -1,11 +1,11 @@
 const exe = require('@angablue/exe');
 
 const build = exe({
-    entry: './dist/index.js',
+    entry: './index.js',
     out: './expand.exe',
-    pkg: ['--compress GZip'], // Specify extra pkg arguments
+    // Specify extra pkg arguments
     version: '2.4.2',
-    target: 'node14-win',
+    target: 'node16-win-x64',
     icon: './icon.ico', // Application icons must be in .ico format
     properties: {
         FileDescription: 'Miftachul Huda',

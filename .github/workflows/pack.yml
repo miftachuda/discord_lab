@@ -12,10 +12,10 @@ jobs:
           node-version: 16.18.0
       - name: 'Install Dependencies'
         run: npm install
-      - name: 'Bundling with esbuild'
-        run: npx esbuild index.js --bundle --platform=node --external:canvas --outfile=dist/index.js
+      # - name: 'Bundling with esbuild'
+      #   run: npx esbuild index.js --bundle --platform=node --external:canvas --outfile=dist/index.js
       - name: 'Packaging with pkg'
-        run: npx pkg --compress GZip -t node14-win dist/index.js
+        run: npx pkg -t node16-win-x64
       - name: get version action
         id: get-version
         uses: beaconbrigade/package-json-version@v0.3
@@ -44,7 +44,7 @@ jobs:
          GITHUB_TOKEN: ${{ github.token }}
         with:
          upload_url: ${{ steps.create_release.outputs.upload_url }}
-         asset_path: ./index.exe
+         asset_path: ./expand.exe
          asset_name: expand.exe
          asset_content_type: application/exe
 #       - name: Upload server release

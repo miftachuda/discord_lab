@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "pkg index.js -t node16-win-x64",
-    "pack": "npx esbuild index.js --bundle --platform=node --external:canvas --outfile=dist/index.js && node build.js"
+    "pack": "node build.js"
   },
   "keywords": [],
   "author": "",
