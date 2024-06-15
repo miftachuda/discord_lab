@@ -602,7 +602,7 @@ async function proceesArray(array_in) {
     if (samples[0].section === "LOC2") {
         min_sample = 5
     } else {
-        min_sample = 1
+        min_sample = 0
     }
     if (sorted[2].length > min_sample && shift == "Sore") {
         return ["Sore", sorted[2]]

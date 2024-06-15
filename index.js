@@ -12,11 +12,16 @@ const proxyAgent = new HttpsProxyAgent({
 class Discord {
   async reply(text) {
     const url = 'https://http.miftachuda.my.id';
+    const url2 = 'https://tele.miftachuda.my.id/forward';
     const data = {
       content: text,
     };
-
+    let result = text.replace(/`/g, "");
+    const data2 = {
+      message: result,
+    };
     try {
+      console.log("sending discord message...");
       const response = await fetch(url, {
         method: 'POST',
         agent: proxyAgent, // Setting method to POST
@@ -27,14 +32,34 @@ class Discord {
       });
 
       if (!response.ok) { // Check if the response status code is not successful
-        throw new Error('Network response was not ok');
+        console.log('Discord response was not ok');
       }
 
-      console.log("sending message");
+
     } catch (error) {
-      console.error('Error:', error.message);
+      console.log('Error:', error.message);
+    }
+    try {
+      console.log("sending tele message...");
+      const response = await fetch(url2, {
+        method: 'POST',
+        agent: proxyAgent, // Setting method to POST
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data2) // Converting JavaScript object to JSON string
+      });
+
+      if (!response.ok) { // Check if the response status code is not successful
+        console.log('Telegram response was not ok');
+      }
+
+
+    } catch (error) {
+      console.log('Error:', error.message);
     }
   }
+
 }
 
 
