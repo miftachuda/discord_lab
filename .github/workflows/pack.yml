@@ -16,28 +16,28 @@ jobs:
         run: npx esbuild index.js --bundle --platform=node --external:canvas --outfile=dist/index.js
       - name: 'Packaging with pkg'
         run: npx pkg --compress GZip -t node14-win dist/index.js
-      - name: 'Get Previous tag'
-        id: previoustag
-        uses: 'WyriHaximus/github-action-get-previous-tag@v1'
-        env:
-         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with: 
-         fallback: 1.0.0
-      - name: 'Get next version'
-        id: monoversion
-        uses: "WyriHaximus/github-action-next-release-version@1.0.0"
+      - name: get version action
+        id: get-version
+        uses: beaconbrigade/package-json-version@v0.3
         with:
-         version: ${{ steps.previoustag.outputs.tag }}
-      - name: 'Release'
+          path: .
+      - name: Generate release tag
+        id: generate_release_tag
+        uses: amitsingh-007/next-release-tag@v4.0.0
+        with:
+          github_token: ${{ github.token }}
+          tag_prefix: "v"
+          tag_template: "yyyy.mm.dd.i"
+      - name: Release
         uses: actions/create-release@v1
         id: create_release
         env:
-         GITHUB_TOKEN: ${{ github.token }}
+            GITHUB_TOKEN: ${{ github.token }}
         with:
-         draft: false
-         prerelease: false
-         tag_name: ${{ steps.monoversion.outputs.version }}
-         release_name: Release ${{ steps.monoversion.outputs.version}}
+            draft: false
+            prerelease: false
+            tag_name: ${{ steps.generate_release_tag.outputs.next_release_tag }}
+            release_name: Release ${{ steps.get-version.outputs.version}} ${{ steps.generate_release_tag.outputs.next_release_tag }}
       - name: 'Upload Release'
         uses: actions/upload-release-asset@v1
         env:
