@@ -9,38 +9,26 @@ const proxyAgent = new HttpsProxyAgent({
   proxy: proxyUrl
 })
 async function sendTele(message) {
-  console.log(message)
-  const pro_agent = require('proxying-agent').globalize('http://miftachul.huda:pertamina%402029@172.17.3.162:8080');
-  async function callAxiosWithRetry(config, depth, failMassage) {
-      const wait = (ms) => new Promise((res) => setTimeout(res, ms));
-      try {
-          return await axiost(config)
-      } catch (e) {
-          if (depth > 10) {
-              throw e;
-          }
-          console.log(e)
-          await wait(2 ** depth * 100);
-          console.log("Retrying .. " + depth)
-          return callAxiosWithRetry(config, depth + 1, failMassage);
-      }
-  }
-  let encoded = encodeURIComponent(message);
-  var config = {
-      httpAgent: pro_agent,
-      httpsAgent: pro_agent,
-      method: 'post',
-      url: `https://api.telegram.org/bot5266529032:AAG6oq2TOmKOXrt5qaeVLk3ehvYF0bJZ6ko/sendMessage?chat_id=-805440157&parse_mode=HTML&text=${encoded}`,
-      headers: {}
-  };
+  try {
+    let encoded = encodeURIComponent(message);
+    const url = `https://api.telegram.org/bot5266529032:AAG6oq2TOmKOXrt5qaeVLk3ehvYF0bJZ6ko/sendMessage?chat_id=-805440157&parse_mode=HTML&text=${encoded}`;
+    const response = await fetch(url, {
+      method: 'POST',
+      agent: proxyAgent, // Setting method to POST
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data) // Converting JavaScript object to JSON string
+    });
 
-  await callAxiosWithRetry(config, 0, "Fail Send Telegram")
-      .then(function (response) {
-          console.log("Telegram message Sent");
-      })
-      .catch(function (error) {
-          console.log("Failed sending Telegram message");
-      });
+    if (!response.ok) { // Check if the response status code is not successful
+      console.log('Discord response was not ok');
+    }
+
+
+  } catch (error) {
+    console.log('Error:', error.message);
+  }
 }
 class Discord {
   
