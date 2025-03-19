@@ -504,40 +504,7 @@ async function castSample(sam) {
         }, "")
     return `✅ Shift : ${shift} ✅\n${final_sample}`
 }
-// async function sendMessage(message) {
-//     console.log(message)
-//     // const pro_agent = require('proxying-agent').globalize('http://miftachul.huda:pertamina%402025@172.17.3.162:8080');
-//     async function callAxiosWithRetry(config, depth, failMassage) {
-//         const wait = (ms) => new Promise((res) => setTimeout(res, ms));
-//         try {
-//             return await axiost(config)
-//         } catch (e) {
-//             if (depth > 10) {
-//                 throw e;
-//             }
-//             console.log(e)
-//             await wait(2 ** depth * 100);
-//             console.log("Retrying .. " + depth)
-//             return callAxiosWithRetry(config, depth + 1, failMassage);
-//         }
-//     }
-//     let encoded = encodeURIComponent(message);
-//     var config = {
-//         // httpAgent: pro_agent,
-//         // httpsAgent: pro_agent,
-//         method: 'post',
-//         url: `https://api.telegram.org/bot5266529032:AAG6oq2TOmKOXrt5qaeVLk3ehvYF0bJZ6ko/sendMessage?chat_id=-805440157&parse_mode=HTML&text=${encoded}`,
-//         headers: {}
-//     };
 
-//     await callAxiosWithRetry(config, 0, "Fail Send Telegram")
-//         .then(function (response) {
-//             console.log("Telegram message Sent");
-//         })
-//         .catch(function (error) {
-//             console.log("Failed sending Telegram message");
-//         });
-// }
 function stringRep(text) {
 
     var mapObj = {
@@ -638,17 +605,16 @@ async function main(discord) {
         var data_loc2 = await proceesArray(sample_arr_loc2)
         if (data_loc2[0] == "Empty") {
             console.log("delay 5 minutes")
-            ///discord.reply("delay 5 minutes")
+            discord.reply("delay 5 minutes")
             await delayScriptExecution(300)
             console.log("retry affter 5 minutes")
-            //discord.reply("retry affter 5 minutes")
+            discord.reply("retry affter 5 minutes")
             await main(discord);
         } else {
             const casted_loc2 = await castSample(data_loc2[1])
             const final_result_loc2 = stringRep(casted_loc2)
             await discord.reply(final_result_loc2)
             console.log(final_result_loc2)
-            // await sendMessage(final_result_loc2)
             if (dom_ext.window.document.getElementsByClassName('dataTableInner').length > 0) {
                 const sample_arr_ext = dom_ext.window.document.getElementsByClassName('dataTableInner')[0].children[1].children
                 const data_ext = await proceesArray(sample_arr_ext)
@@ -657,7 +623,6 @@ async function main(discord) {
                     const final_result_ext = stringRep(casted_ext)
                     await discord.reply(final_result_ext)
                     console.log(final_result_ext)
-                    // await sendMessage(reduced)
                 }
 
             }
@@ -667,12 +632,11 @@ async function main(discord) {
         await delayScriptExecution(900)
         console.log("Retrying after wait")
         await main(discord);
-        // await sendMessage("LOC II No data yet")
+        discord.reply("LOC II No data yet")
     }
     const endTime = performance.now();
     const executionTime = endTime - startTime;
     const formattedTime = (executionTime / 1000).toFixed(2) + " Seconds";
     discord.reply(formattedTime)
-    //await sendMessage(formattedTime)
 }
 module.exports = main
