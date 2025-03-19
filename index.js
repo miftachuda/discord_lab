@@ -18,7 +18,6 @@ async function sendTele(message) {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(data) // Converting JavaScript object to JSON string
     });
 
     if (!response.ok) { // Check if the response status code is not successful
